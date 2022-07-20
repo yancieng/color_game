@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Albert Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(43, 43, 43);
+  color: #fff;
+}
+
+.layout {
+  width: 100%;
+  max-width: 486px;
+  margin: 0 auto;
+  padding: 25px;
+}
+
+.block {
+  width: 100%;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color, 0.25s;
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+  &.red {
+    background-color: rgb(216, 74, 74);
+  }
+  &.blue {
+    background-color: #2d8fbb;
+  }
+  &.grey {
+    background-color: rgb(70, 70, 70);
+  }
+  &.error {
+    border: 2px solid #fff;
+  }
+  svg {
+    color: #dbdbdb;
+  }
+}
+
+.menu {
+  text-align: center;
+  .title {
+    font-size: 20px;
+    margin: 40px 0;
+  }
+  .sizePicker {
+    display: grid;
+    grid-template-columns: repeat(3, min-content);
+    grid-template-rows: 1fr 1fr;
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    margin: 0 auto;
+    width: fit-content;
+  }
+  .block {
+    font-weight: bold;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.message {
+  font-size: 20px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-row-gap: 2%;
+  grid-column-gap: 2%;
+  width: 90%;
+  margin: 40px auto;
+}
+
+.controls {
+  padding-top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  div {
+    cursor: pointer;
+    &:hover {
+      color: rgb(61, 173, 224);
+    }
+  }
+  svg {
+    font-size: 35px;
+  }
+}
