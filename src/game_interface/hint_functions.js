@@ -1,4 +1,15 @@
-function check3together(matrix, isReversed) {
+function generateErrorMap(size, errorArray, isReversed) {
+  return [...Array(size)].map((el, rowIndex) =>
+    [...Array(size)].map((el, columnIndex) =>
+      errorArray.find((item) => {
+        if (isReversed) return item[0] === columnIndex && item[1] === rowIndex;
+        return item[0] === rowIndex && item[1] === columnIndex;
+      })
+    )
+  );
+}
+
+function check3together(matrix) {
   let x, y;
   x = matrix.findIndex((array) => {
     y = array.findIndex(
@@ -7,19 +18,13 @@ function check3together(matrix, isReversed) {
     );
     return y !== -1;
   });
+
   if (x !== -1 && y !== -1)
     return [
-      { row: isReversed ? y : x, column: isReversed ? x : y },
-      {
-        row: isReversed ? y + 1 : x,
-        column: isReversed ? x : y + 1,
-      },
-      {
-        row: isReversed ? y + 2 : x,
-        column: isReversed ? x : y + 2,
-      },
+      [x, y],
+      [x, y + 1],
+      [x, y + 2],
     ];
-
   return null;
 }
 
@@ -42,47 +47,41 @@ function checkIfIdentical(matrix, isReversed) {
   if (duplicateIndex2 !== -1) {
     const errorMap = [];
     matrix.forEach((el, index) => {
-      errorMap.push({
-        row: isReversed ? index : duplicateIndex1,
-        column: isReversed ? duplicateIndex1 : index,
-      });
-      errorMap.push({
-        row: isReversed ? index : duplicateIndex2,
-        column: isReversed ? duplicateIndex2 : index,
-      });
+      errorMap.push([duplicateIndex1, index]);
+      errorMap.push([duplicateIndex2, index]);
     });
     return errorMap;
   }
   return null;
 }
 
-export function errorCheck(systemBoard) {
-  const rowError = check3together(systemBoard.rows);
+export function errorCheck(gameBoard, size) {
+  const rowError = check3together(gameBoard.rows);
   if (rowError)
     return {
-      error: rowError,
+      error: generateErrorMap(size, rowError),
       message: "3 boxes of the same color cannot be together",
     };
 
-  const columnError = check3together(systemBoard.columns, true);
+  const columnError = check3together(gameBoard.columns);
   if (columnError)
     return {
-      error: columnError,
+      error: generateErrorMap(size, columnError, true),
       message: "3 boxes of the same color cannot be together",
     };
 
-  const duplicateRow = checkIfIdentical(systemBoard.rows);
+  const duplicateRow = checkIfIdentical(gameBoard.rows);
   if (duplicateRow)
     return {
-      error: duplicateRow,
-      message: "2 rows or columns cannot be the same",
+      error: generateErrorMap(size, duplicateRow),
+      message: "2 rows cannot be the same",
     };
 
-  const duplicateColumn = checkIfIdentical(systemBoard.columns, true);
+  const duplicateColumn = checkIfIdentical(gameBoard.columns, true);
   if (duplicateColumn)
     return {
-      error: duplicateColumn,
-      message: "2 rows or columns cannot be the same",
+      error: generateErrorMap(size, duplicateColumn, true),
+      message: "2 columns cannot be the same",
     };
 
   return null;
