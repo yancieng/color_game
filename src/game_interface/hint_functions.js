@@ -1,3 +1,13 @@
+function convertGameBoardToColumns(gameBoard, size) {
+  const initialValue = [...Array(size)].map(() => []);
+  return gameBoard.reduce((previousValue, row) => {
+    row.forEach((el, index) => {
+      previousValue[index].push(el);
+    });
+    return previousValue;
+  }, initialValue);
+}
+
 function generateErrorMap(size, errorArray, isReversed) {
   return [...Array(size)].map((el, rowIndex) =>
     [...Array(size)].map((el, columnIndex) =>
@@ -56,33 +66,25 @@ function checkIfIdentical(matrix, isReversed) {
 }
 
 export function errorCheck(gameBoard, size) {
-  const rowError = check3together(gameBoard.rows);
-  if (rowError)
-    return {
-      error: generateErrorMap(size, rowError),
+  const checkList = [
+    {
+      fuc: check3together,
       message: "3 boxes of the same color cannot be together",
-    };
+    },
+    { fuc: checkIfIdentical, message: "2 rows or columns cannot be the same" },
+  ];
 
-  const columnError = check3together(gameBoard.columns);
-  if (columnError)
-    return {
-      error: generateErrorMap(size, columnError, true),
-      message: "3 boxes of the same color cannot be together",
-    };
+  const gameBoardInColumns = convertGameBoardToColumns(gameBoard, size);
 
-  const duplicateRow = checkIfIdentical(gameBoard.rows);
-  if (duplicateRow)
-    return {
-      error: generateErrorMap(size, duplicateRow),
-      message: "2 rows cannot be the same",
-    };
-
-  const duplicateColumn = checkIfIdentical(gameBoard.columns, true);
-  if (duplicateColumn)
-    return {
-      error: generateErrorMap(size, duplicateColumn, true),
-      message: "2 columns cannot be the same",
-    };
-
+  for (let item of checkList) {
+    for (let index in [...Array(2)]) {
+      const error = item.fuc(index === "0" ? gameBoard : gameBoardInColumns);
+      if (error)
+        return {
+          error: generateErrorMap(size, error, index === "0" ? false : true),
+          message: item.message,
+        };
+    }
+  }
   return null;
 }

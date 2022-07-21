@@ -11,21 +11,21 @@ const CellColor = {
 };
 
 const GameBoard = ({ defaultBoard, size }) => {
-  const [gameBoard, setGameBoard] = useState({ rows: [], columns: [] });
+  const [gameBoard, setGameBoard] = useState([]);
   const [displayLock, setDisplayLock] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState([]);
   const [memory, setMemory] = useState([]);
 
   const initialise = () => {
-    const initialValue = [...Array(size)].map(() => []);
-    const columns = defaultBoard.reduce((previousValue, row) => {
-      row.forEach((el, index) => {
-        previousValue[index].push(el);
-      });
-      return previousValue;
-    }, initialValue);
-    const _gameBoard = { rows: defaultBoard, columns };
+    // const initialValue = [...Array(size)].map(() => []);
+    // const columns = defaultBoard.reduce((previousValue, row) => {
+    //   row.forEach((el, index) => {
+    //     previousValue[index].push(el);
+    //   });
+    //   return previousValue;
+    // }, initialValue);
+    const _gameBoard = JSON.parse(JSON.stringify(defaultBoard));
     setGameBoard(_gameBoard);
     setMemory([_gameBoard]);
   };
@@ -41,16 +41,14 @@ const GameBoard = ({ defaultBoard, size }) => {
     }
     if (message !== "") removeHint();
 
-    const currentValue = gameBoard.rows[row][column];
+    const currentValue = gameBoard[row][column];
     let newValue;
     if (currentValue < 2) newValue = currentValue + 1;
     if (currentValue === 2) newValue = 0;
 
     const _gameBoard = JSON.parse(JSON.stringify(gameBoard));
-    _gameBoard.rows[row][column] = newValue;
-    _gameBoard.columns[column][row] = newValue;
-
     const _memory = JSON.parse(JSON.stringify(memory));
+    _gameBoard[row][column] = newValue;
     _memory.push(gameBoard);
 
     setMemory(_memory);
@@ -91,7 +89,7 @@ const GameBoard = ({ defaultBoard, size }) => {
         className="gameboard"
         style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
       >
-        {gameBoard.rows.map((row, rowIndex) => (
+        {gameBoard.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
             {row.map((column, columnIndex) => (
               <div
