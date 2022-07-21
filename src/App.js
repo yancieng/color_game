@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Interface from "./game_interface/";
+import GameController from "./GameController";
 
 const GAME_LIST = [4, 6, 8, 10, 12];
 function App() {
@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="layout">
       {page === "menu" && <Menu />}
-      {page === "game" && <Interface size={size} />}
+      {page === "game" && <GameController size={size} setPage={setPage} />}
     </div>
   );
 }

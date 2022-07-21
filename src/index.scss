@@ -72,9 +72,9 @@ body {
 .message {
   font-size: 20px;
   height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 430px;
+  text-align: center;
+  margin: 40px auto;
 }
 
 .gameboard {

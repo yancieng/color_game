@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { GoLock } from "react-icons/go";
-import { BiUndo, BiRefresh } from "react-icons/bi";
+import { BiUndo, BiRefresh, BiLockAlt } from "react-icons/bi";
 import { AiFillEye } from "react-icons/ai";
-import { errorCheck } from "./hint_functions";
+import { IoIosClose } from "react-icons/io";
+import { errorCheck } from "./hintFunctions";
 
 const CellColor = {
   0: "grey",
@@ -10,7 +10,7 @@ const CellColor = {
   2: "blue",
 };
 
-const GameBoard = ({ defaultBoard, size }) => {
+const GameBoard = ({ defaultBoard, size, backToMenu }) => {
   const [gameBoard, setGameBoard] = useState([]);
   const [displayLock, setDisplayLock] = useState(false);
   const [message, setMessage] = useState("");
@@ -101,7 +101,7 @@ const GameBoard = ({ defaultBoard, size }) => {
                 }
               >
                 {displayLock && defaultBoard[rowIndex][columnIndex] !== 0 && (
-                  <GoLock />
+                  <BiLockAlt />
                 )}
               </div>
             ))}
@@ -124,6 +124,11 @@ const GameBoard = ({ defaultBoard, size }) => {
           <BiRefresh onClick={initialise} />
           <br />
           Restart
+        </div>
+        <div>
+          <IoIosClose onClick={backToMenu} />
+          <br />
+          Cancel
         </div>
       </div>
     </>

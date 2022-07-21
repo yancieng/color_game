@@ -169,7 +169,7 @@ export function errorCheck(gameBoard, size) {
   const checkList = [
     {
       fuc: check3together,
-      message: "3 boxes of the same color cannot be together",
+      message: "3 tiles of the same color cannot be together",
     },
     {
       fuc: checkIfIdentical,
@@ -177,19 +177,19 @@ export function errorCheck(gameBoard, size) {
     },
     {
       fuc: checkEvenColorOverLimit,
-      message: "Each row or column should have even numbers of color boxes",
+      message: "Each row or column should have even numbers of color tiles",
     },
     {
       fuc: check2together,
-      message: "3 boxes of the same color cannot be together!",
+      message: "3 tiles of the same color cannot be together",
     },
     {
       fuc: checkHollow,
-      message: "3 boxes of the same color cannot be together!!",
+      message: "3 tiles of the same color cannot be together",
     },
     {
       fuc: checkEvenColorUnderLimit,
-      message: "Each row or column should have even numbers of color boxes!",
+      message: "Each row or column should have even numbers of color tiles",
     },
     {
       fuc: checkForIdenticalRowHint,
