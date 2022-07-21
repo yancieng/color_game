@@ -18,16 +18,11 @@ const GameBoard = ({ defaultBoard, size }) => {
   const [memory, setMemory] = useState([]);
 
   const initialise = () => {
-    // const initialValue = [...Array(size)].map(() => []);
-    // const columns = defaultBoard.reduce((previousValue, row) => {
-    //   row.forEach((el, index) => {
-    //     previousValue[index].push(el);
-    //   });
-    //   return previousValue;
-    // }, initialValue);
     const _gameBoard = JSON.parse(JSON.stringify(defaultBoard));
     setGameBoard(_gameBoard);
     setMemory([_gameBoard]);
+    setMessage("");
+    setError([]);
   };
 
   useEffect(() => {
